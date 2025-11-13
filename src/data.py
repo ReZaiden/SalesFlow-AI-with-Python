@@ -3,6 +3,7 @@ import pandas as pd
 from .config import Config
 from .logger import setup_logger
 from typing import List, Dict
+from pypdf import PdfReader
 
 logger = setup_logger("knowledge")
 
@@ -12,7 +13,8 @@ class KnowledgeBase:
     def __init__(self):
         self.config = Config.get()["sources"]
         self.products: List[Dict[str, str]] = []
-        self.summary: str = ""
+        self.pdf_text: str = ""
+        self.txt_text: str = ""
         self.loaded = False
 
     def load(self) -> None:
@@ -26,6 +28,14 @@ class KnowledgeBase:
         if self.config.get("excel_file"):
             self._load_excel()
 
+        # 2. Load PDF
+        if self.config.get("pdf_file"):
+            self._load_pdf()
+
+        # 3. Load TXT
+        if self.config.get("txt_file"):
+            self._load_txt()
+
         self.loaded = True
         logger.info(f"Knowledge sources loaded successfully: {len(self.products)} products")
 
@@ -33,7 +43,7 @@ class KnowledgeBase:
         """Load excel file"""
         path = Path(self.config.get("excel_file"))
         if not path.exists() or not path.is_file():
-            logger.info("Excel file not found")
+            logger.warning("Excel file not found")
             return
 
         try:
@@ -65,4 +75,40 @@ class KnowledgeBase:
         """Get all products"""
         self.load()
         return self.products
+
+    def _load_pdf(self) -> None:
+        """Load pdf file"""
+        path = Path(self.config.get("pdf_file"))
+        if not path.exists() or not path.is_file():
+            logger.warning("Pdf file not found")
+            return
+
+        try:
+            reader = PdfReader(path)
+            text = ""
+            for page in reader.pages:
+                page_text = page.extract_text()
+                if page_text:
+                    text += page_text + "\n"
+
+            self.pdf_text = text
+            logger.info(f"Pdf file loaded successfully: {len(text)} characters")
+        except Exception as e:
+            logger.error(f"Failed to load pdf file: {e}")
+
+    def _load_txt(self) -> None:
+        """Load txt file"""
+        path = Path(self.config.get("txt_file"))
+        if not path.exists() or not path.is_file():
+            logger.warning("Text file not found")
+            return
+
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                self.txt_text = f.read()
+            logger.info(f"Text file loaded successfully: {len(self.txt_text)} characters")
+        except Exception as e:
+            logger.error(f"Failed to load txt file: {e}")
+
+
 
