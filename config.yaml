@@ -1,3 +1,8 @@
+agent:
+  name: "AidenAI"
+  role: "Sales Consultant"
+  company: "Aiden"
+
 sources:
   excel_file: "files/products.xlsx"
   pdf_file: "files/info.pdf"
