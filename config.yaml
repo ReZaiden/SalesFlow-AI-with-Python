@@ -7,3 +7,9 @@ sources:
   excel_file: "files/products.xlsx"
   pdf_file: "files/info.pdf"
   txt_file: "files/summary.txt"
+
+ui:
+  title: "SalesFlow AI - AidenAI"
+  description: "hi"
+  theme: "Ocean"
+  save_history: true
