@@ -1,3 +1,7 @@
+server:
+  name: "localhost"
+  port: 8000
+
 agent:
   name: "AidenAI"
   role: "Sales Consultant"
