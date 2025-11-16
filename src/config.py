@@ -18,7 +18,8 @@ class Config:
 
     # AI config
     AI_API_KEY = os.getenv("AI_API_KEY", None)
-    AI_BASE_URL = os.getenv("AI_API_SECRET", None)
+    AI_BASE_URL = os.getenv("AI_BASE_URL", None)
+    AI_MODEL = os.getenv("AI_MODEL", None)
 
     # ntfy
     NTFY_TOPIC = os.getenv("NTFY_TOPIC", None)
