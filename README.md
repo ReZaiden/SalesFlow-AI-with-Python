@@ -1,4 +1,5 @@
 # 🤖 AI Sales Agent with Lead Generation
+![Live Demo](https://img.shields.io/badge/Live-Demo:-green) [Click Here👆🏻](https://huggingface.co/spaces/ReZaiden/SalesAI_Flow)
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![OpenAI](https://img.shields.io/badge/OpenAI-API-brightgreen)
